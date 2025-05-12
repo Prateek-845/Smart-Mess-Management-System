@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Historical Data</h2>
+<table>
+    <tr>
+        <th>Timestamp</th>
+        <th>Total Entries</th>
+        <th>Temperature</th>
+        <th>Humidity</th>
+        <th>Bin Fills</th>
+    </tr>
+    {% for entry in data %}
+    <tr>
+        <td>{{ entry[1] }}</td>
+        <td>{{ entry[3] }}</td>
+        <td>{{ entry[4] }}°C</td>
+        <td>{{ entry[5] }}%</td>
+        <td>{{ entry[7] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

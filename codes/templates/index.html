@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="card">
+        <h2>Occupancy</h2>
+        <p id="occupancy">{{ data.occupancy }}</p>
+    </div>
+    <div class="card">
+        <h2>Temperature</h2>
+        <p id="temperature">{{ data.temperature }}°C</p>
+    </div>
+    <div class="card">
+        <h2>Humidity</h2>
+        <p id="humidity">{{ data.humidity }}%</p>
+    </div>
+    <div class="card">
+        <h2>Bin Status</h2>
+        <p id="bin-status" class="{% if data.distance <= 10 %}full{% else %}empty{% endif %}">
+            {% if data.distance <= 10 %}FULL{% else %}Empty{% endif %}
+        </p>
+    </div>
+    <div class="card">
+        <h2>Lights</h2>
+        <p id="lights-status" class="{% if data.occupancy > 0 %}on{% else %}off{% endif %}">
+            {% if data.occupancy > 0 %}On{% else %}Off{% endif %}
+        </p>
+    </div>
+</div>
+<script>
+setInterval(() => {
+    fetch('/api/current')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('occupancy').textContent = data.occupancy;
+        document.getElementById('temperature').textContent = `${data.temperature}°C`;
+        document.getElementById('humidity').textContent = `${data.humidity}%`;
+        const binStatus = document.getElementById('bin-status');
+        binStatus.textContent = data.distance <= 10 ? 'FULL' : 'Empty';
+        binStatus.className = data.distance <= 10 ? 'full' : 'empty';
+        const lightsStatus = document.getElementById('lights-status');
+        lightsStatus.textContent = data.occupancy > 0 ? 'On' : 'Off';
+        lightsStatus.className = data.occupancy > 0 ? 'on' : 'off';
+    });
+}, 2000);
+</script>
+{% endblock %}
