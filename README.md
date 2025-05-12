@@ -1,4 +1,4 @@
-# Smart Mess Management System– IoT-Based Mess Management System
+# Smart Mess Management System – IoT Based Mess Management System
 
 A complete IoT project for real-time monitoring and management of a mess (dining hall) using ESP32, sensors, and a Python Flask dashboard.
 
